@@ -130,6 +130,9 @@ class Database {
 	}
 
 	public function remainingSeats($movieName, $date){
+		$query = "SELECT freeSeats FROM Performances WHERE thedate = ? AND movieName = ?"
+		$rs = $this->executeQuery($query);
+
 	}
 
 	public function bookTicket (){
