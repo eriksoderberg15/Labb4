@@ -152,7 +152,13 @@ class Database {
 			return false;
 		}
 		if(isUser(UID) && (remainingSeats(movieName, date) > 0)){
-			
+			//all good -> boka biljett-fan
+			$resultSet1 = $this->executeUpdate($querySeats, array($movieName, $date));
+			$resultSet2 = $this->executeUpdate($querySeats, array($date, $movieName, $UID));
+
+			//Med tanke på att det bara är DB updateringar kan vi flush:a våra resultsets
+			var_dump(resultSet1);
+			var_dump(resultSet2);
 		}
 
 	}
