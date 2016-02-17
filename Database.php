@@ -36,7 +36,7 @@ class Database {
 	public function openConnection() {
 		try {
 			$this->conn = new PDO("mysql:host=$this->host;dbname=$this->database", 
-					$this->userName,  $this->password);
+				$this->userName,  $this->password);
 			$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		} catch (PDOException $e) {
 			$error = "Connection error: " . $e->getMessage();
@@ -91,10 +91,10 @@ class Database {
 	 * @return The number of affected rows
 	 */
 	private function executeUpdate($query, $param = null) {
-	try {
+		try {
 			$stmt = $this->conn->prepare($query);
 			$result = $stmt->execute($param);
-			} catch (PDOException $e) {
+		} catch (PDOException $e) {
 			$error = "*** Internal error: " . $e->getMessage() . "<p>" . $query;
 			die($error);
 		}
@@ -114,8 +114,15 @@ class Database {
 		return count($result) == 1; 
 	}
 
+	//Return an arrya of the movies available in the DB
 	public function getMovies(){
-
+		$query = "SELECT * FROM Movies";
+		$rs = $this->executeQuery($query);
+		$movies = [];
+		for ($i=0; $i < count($rs); $i++){
+			array_push(movies, $rs[$i]["movieName"]);
+		}
+		return $movies;
 	}
 
 	public function getPerformances($movieName){
@@ -125,21 +132,21 @@ class Database {
 	public function remainingSeats($movieName, $date){
 	}
 
-public function bookTicket (){
+	public function bookTicket (){
 
-}
+	}
 
-public function isReserver(){
+	public function isReserver(){
 
-}
+	}
 
-public function getReservationNbr($movieName, $date, $userName){
+	public function getReservationNbr($movieName, $date, $userName){
 
-}
+	}
 
-public function isUser($UID){
+	public function isUser($UID){
 
-}
+	}
 
 	/*
 	 * *** Add functions ***
