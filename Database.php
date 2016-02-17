@@ -126,13 +126,22 @@ class Database {
 	}
 
 	public function getPerformances($movieName){
-
+		$sql = "SELCET * FROM performances WHERE performances.movieName =  ?";
+		$resultSet = $this->executeQuery($sql, array($movieName));
+		$map = [];
+		
+		for ($i=0; $i < count($resultSet); $i++) {
+			$result = [];
+			array_push($result, $resultSet[0]["theaterName"]);
+			array_push($result, $resultSet[1]["freeSeats"]);
+		}
+		return $map;
 	}
 
 	public function remainingSeats($movieName, $date){
 		$query = "SELECT freeSeats FROM Performances WHERE thedate = ? AND movieName = ?"
-		$rs = $this->executeQuery($query);
-
+		$rs = $this->executeQuery($query, array($date), array($movieName));
+		return $rs
 	}
 
 	public function bookTicket (){
