@@ -140,24 +140,48 @@ class Database {
 
 	public function remainingSeats($movieName, $date){
 		$query = "SELECT freeSeats FROM Performances WHERE thedate = ? AND movieName = ?"
-		$rs = $this->executeQuery($query, array($date), array($movieName));
+		$rs = $this->executeQuery($query, array($date, $movieName);
 		return $rs
 	}
 
-	public function bookTicket (){
+	public function bookTicket ($movieName, $date, $UID){
+		$querySeats = "UPDATE Performances " + "SET freeSeats = (freeSeats - 1) " + "WHERE movieName = ? and theDate = ?";
+		$queryReserve = "INSERT into Reservations(perdate, movieName, userName) values(?, ?, ?)";
+
+		if(isReserved($movieName, $date, $UID)){
+			return false;
+		}
+		if(isUser(UID) && (remainingSeats(movieName, date) > 0)){
+			
+		}
 
 	}
 
-	public function isReserver(){
+	public function isReserved($movieName, $date, $uID){
+		$query = "SELECT * FROM Reservations WHERE userName = ? AND movieName = ? AND perdate = ?";
+		$resultset = $this->executeQuery($query, array($uID, $movieName, $date));
+
+		//returnerar om det finns en sådan reservation false om det inte finns (?)
+		return count(resultset)==1;
+
 
 	}
 
 	public function getReservationNbr($movieName, $date, $userName){
-
+		$query = "SELECT id FROM Reservations WHERE perdate =? and movieName = ? and userName = ?";
+		$resultSet = $this -> executeQuery($query, array($date, $movieName, $userName));
 	}
+		if(count($resultSet)==1){
+			return $resultSet
+		}else{
+			//shit went south
+			return 
+		}
 
 	public function isUser($UID){
-
+		$query = "SELECT * FROM Users WHERE UserName = ?";
+		$resultSet = $this->executeQuery($sql, array($UID));
+		return count($result) == 1;
 	}
 
 	/*
